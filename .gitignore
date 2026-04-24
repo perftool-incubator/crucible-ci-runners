@@ -1,0 +1,26 @@
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Terraform plan files
+*.tfplan
+tfplan
+tfplan-*
+
+# Terraform directory
+.terraform/
+
+# Terraform variables with secrets
+terraform.tfvars
+
+# Claude project directory
+.claude/
+
+# Packer binary
+packer/packer-build/packer
+
+# Packer build logs
+packer/packer-build/*.log
+
+# Packer manifests (generated)
+packer/packer-build/packer-manifest*.json

@@ -1,0 +1,11 @@
+# Copy this file to terraform.tfvars and fill in your values
+
+aws_region = "us-east-1"
+
+github_app_id = "2942511"
+
+# Base64 encode your private key file:
+# base64 -w 0 path/to/your-github-app.private-key.pem
+github_app_key_base64 = "YOUR_BASE64_ENCODED_PRIVATE_KEY_HERE"
+
+github_organization = "YOUR_GITHUB_ORG_OR_USERNAME"

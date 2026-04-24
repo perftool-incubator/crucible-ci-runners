@@ -33,7 +33,7 @@ resource "random_id" "random" {
 # GitHub Actions Runners Module (Multi-Runner)
 module "runners" {
   source  = "github-aws-runners/github-runner/aws//modules/multi-runner"
-  version = "7.4.0"
+  version = "7.6.0"
 
   aws_region = local.aws_region
   vpc_id     = module.vpc.vpc_id
@@ -246,7 +246,7 @@ module "runners" {
 # Configure GitHub App webhook
 module "webhook_github_app" {
   source     = "github-aws-runners/github-runner/aws//modules/webhook-github-app"
-  version    = "7.4.0"
+  version    = "7.6.0"
   depends_on = [module.runners]
 
   github_app = {

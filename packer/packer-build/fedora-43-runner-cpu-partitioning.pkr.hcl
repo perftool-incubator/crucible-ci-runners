@@ -87,7 +87,8 @@ build {
       "sudo dnf check-update || true",
 
       # Install required packages (podman and curl are already installed)
-      "sudo dnf install -y git wget jq tar gzip buildah",
+      "sudo dnf install -y git wget jq tar gzip buildah firewalld",
+      "sudo systemctl enable firewalld",
 
       # Install AWS SSM Agent for remote access
       "echo 'Installing AWS SSM Agent...'",

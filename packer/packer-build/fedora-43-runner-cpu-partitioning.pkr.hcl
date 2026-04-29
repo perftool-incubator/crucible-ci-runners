@@ -166,6 +166,8 @@ build {
 
       # Install K3s (lightweight Kubernetes)
       "echo 'Installing K3s...'",
+      "sudo mkdir -p /etc/rancher/k3s",
+      "echo 'disable:\n  - metrics-server\n  - traefik' | sudo tee /etc/rancher/k3s/config.yaml",
       "curl -sfL https://get.k3s.io | INSTALL_K3S_SKIP_START=true INSTALL_K3S_SKIP_ENABLE=true sh -",
       "echo 'K3s installed, checking version:'",
       "K3S_VERSION=$(k3s --version | head -1 | awk '{print $3}')",

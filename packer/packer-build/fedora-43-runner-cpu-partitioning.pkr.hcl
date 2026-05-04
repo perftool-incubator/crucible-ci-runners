@@ -38,7 +38,8 @@ source "amazon-ebs" "fedora_runner_cpu_partitioning" {
   ami_name      = "${var.ami_prefix}-${formatdate("YYYY-MM-DD-hhmm", timestamp())}"
   instance_type = var.instance_type
   region        = var.region
-  source_ami    = data.amazon-ami.fedora_43.id
+  # Pin to Fedora 43 20260429 to avoid 20260503 base image regression (tput/terminal issue)
+  source_ami    = "ami-0c4e66265c59910a1"
   ssh_username  = "fedora"
 
   # Use existing VPC and public subnet
@@ -89,6 +90,8 @@ build {
       # Install required packages (podman and curl are already installed)
       "sudo dnf install -y git wget jq tar gzip buildah firewalld",
       "sudo systemctl enable firewalld",
+      "sudo firewall-offline-cmd --zone=trusted --add-interface=cni0",
+      "sudo firewall-offline-cmd --zone=trusted --add-interface=flannel.1",
 
       # Install AWS SSM Agent for remote access
       "echo 'Installing AWS SSM Agent...'",

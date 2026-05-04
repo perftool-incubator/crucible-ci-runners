@@ -89,6 +89,8 @@ build {
       # Install required packages (podman and curl are already installed)
       "sudo dnf install -y git wget jq tar gzip buildah firewalld",
       "sudo systemctl enable firewalld",
+      "sudo firewall-offline-cmd --zone=trusted --add-interface=cni0",
+      "sudo firewall-offline-cmd --zone=trusted --add-interface=flannel.1",
 
       # Install AWS SSM Agent for remote access
       "echo 'Installing AWS SSM Agent...'",

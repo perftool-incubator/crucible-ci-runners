@@ -243,6 +243,29 @@ module "runners" {
   }
 }
 
+# Set reserved concurrency on webhook and dispatcher Lambdas to prevent
+# SSM rate limit exhaustion during webhook bursts. The upstream module
+# doesn't expose these as variables, so we apply them after the module.
+resource "null_resource" "webhook_concurrency" {
+  depends_on = [module.runners]
+  triggers = {
+    always_run = timestamp()
+  }
+  provisioner "local-exec" {
+    command = "aws lambda put-function-concurrency --function-name crucible-ci-webhook --reserved-concurrent-executions 5 --region ${local.aws_region}"
+  }
+}
+
+resource "null_resource" "dispatcher_concurrency" {
+  depends_on = [module.runners]
+  triggers = {
+    always_run = timestamp()
+  }
+  provisioner "local-exec" {
+    command = "aws lambda put-function-concurrency --function-name crucible-ci-dispatch-to-runner --reserved-concurrent-executions 5 --region ${local.aws_region}"
+  }
+}
+
 # Configure GitHub App webhook
 module "webhook_github_app" {
   source     = "github-aws-runners/github-runner/aws//modules/webhook-github-app"
